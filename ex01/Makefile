@@ -1,7 +1,7 @@
 NAME = test
 
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic-errors -g
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic-errors -g -fsanitize=address
 # -fsanitize=address
 
 INCS = -I.

@@ -1,0 +1,6 @@
+READEME.md
+.vscode/
+*.o
+*.out
+*.test
+test.cpp

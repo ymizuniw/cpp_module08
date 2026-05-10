@@ -12,17 +12,18 @@ Span::Span(): v_(0)
 Span::Span(unsigned int N)
 {
     v_.reserve(N);
-    // std::cout << "capa is: " << v_.capacity() << std::endl;
-    // std::cout << "size is: " << v_.size()<< std::endl;
+    // std::cout << "capa is: " << v_.capacity() << std::endl; //N is expected.
+    // std::cout << "size is: " << v_.size()<< std::endl; //0 is expected.
     std::cout << "Span Parameterized Constructor Called" << std::endl;
 }
 
 //this won't copy the capacity.
 Span::Span(const Span &other): v_(other.v_)
 {
-    // std::cout << "capa is: " << v_.capacity() << std::endl;
-    // std::cout << "size is: " << v_.size()<< std::endl;
-    std::cout << "Span Copy Constructor Called" << std::endl;
+  // std::cout << "capa is: " << v_.capacity() << std::endl; //other.size() is
+  // expected. std::cout << "size is: " << v_.size()<< std::endl; //other.size()
+  // is expected.
+  std::cout << "Span Copy Constructor Called" << std::endl;
 }
 
 Span &Span::operator=(const Span &other)
@@ -30,6 +31,9 @@ Span &Span::operator=(const Span &other)
     if (this==&other)
         return  (*this);
     this->v_ = other.v_;
+    // std::cout << "capa is: " << v_.capacity() << std::endl; //other.size() is
+    // expected. std::cout << "size is: " << v_.size()<< std::endl;
+    // //other.size() is expected.
     return (*this);
 }
 
@@ -48,13 +52,12 @@ void Span::addNumber(unsigned int m)
 
 unsigned int Span::shortestSpan(void){
     std::vector<unsigned int> tmp = v_;
-    std::sort(tmp.begin(), tmp.begin() + tmp.size());
+    std::sort(tmp.begin(), tmp.end());
     unsigned int shortest_span;
-    for (unsigned int i=0; i<tmp.size()-1;i++)
-    {
-        unsigned int span = tmp[i+1] - tmp[i];
-        if (shortest_span>= span)
-            shortest_span = span;
+    for (unsigned int i = 0; i < tmp.size() - 1; i++) {
+      unsigned int span = tmp[i + 1] - tmp[i];
+      if (shortest_span >= span)
+        shortest_span = span;
     }
     return (shortest_span);
 }
@@ -73,12 +76,16 @@ unsigned int Span::size()
     return (v_.size());
 }
 
+// the capacity of the vector is modified to size if the size and capacity of
+// the vector are different.
 std::vector<unsigned int> Span::getVector() const
 {
     std::vector<unsigned int> v = v_;
     return v;
 }
 
+// this will add vector of unsinged int to span's vector, following the capacity
+// of span's vector. Refer to addNumber().
 void Span::addNumberSequense(const std::vector<unsigned int>::iterator start, const std::vector<unsigned int>::iterator end)
 {
     std::vector<unsigned int>::iterator it = start;
