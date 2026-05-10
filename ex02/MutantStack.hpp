@@ -3,7 +3,7 @@
 
 #include <deque>
 
-template <typename T, class Container = std::deque<T>> class MutantStack {
+template <typename T, class Container = std::deque<T> > class MutantStack {
 protected:
   Container c;
 
