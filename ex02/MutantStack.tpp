@@ -54,89 +54,66 @@ operator> 	左辺が右辺より大きいかの判定を行う
 operator>= 	左辺が右辺以上かの判定を行
 */
 
+#include "MutantStack.hpp"
 #include <deque>
+#include <iostream>
 
-template<typename T, class Container = std::deque<T>>
-class MutantStack:{
-    private:
-      typename Container container_type;
-
-    protected:
-      typename Container c;
-
-    public:
-      typename Container container_type;
-      typename Container::value_type value_type;
-      typename Container::size_type size_type;
-      MutantStack();
-      MutantStack(const MutantStack &other);
-      MutantStack &operator=(const MutantStack &other);
-      ~MutantStack();
-      typename T &top() const;
-      typename T &top();
-      typename T &empty() const;
-      void push();
-      void pop();
-      typename Container::size_type size() const;
-      // iterator
-      typename Container::iterator it;
+template <typename T, class Container>
+MutantStack<T, Container>::MutantStack() {
+  std::cout << "MutantStack DefaultConstructor Called" << std::endl;
 }
 
-template<typename T, class Container>
-MutantStack::MutantStack(){
-    std::cout << "MutantStack DefaultConstructor Called" << std::endl;
+template <typename T, class Container>
+MutantStack<T, Container>::MutantStack(const MutantStack<T, Container> &other)
+    : c(other.c) {
+  std::cout << "MutantStack CopyConstructor Called" << std::endl;
 }
 
-template<typename T, class Container>
-MutantStack::MutantStack(const MutantStack &other): c(other.c){
-    std::cout << "MutantStack CopyConstructor Called" << std::endl;
-}
-
-template<typename T, class Container>
-MutantStack &MutantStack::operator=(const MutantStack &other){
-    if (this==&other)
-        return (*this);
-    *this = other;
+template <typename T, class Container>
+MutantStack<T, Container> &
+MutantStack<T, Container>::operator=(const MutantStack<T, Container> &other) {
+  if (this == &other)
     return (*this);
+  c = other.c;
+  return (*this);
 }
 
-template<typename T, class Container>
-MutantStack::~MutantStack(){
-    std::cout << "MutantStack Destructor Called" << std::endl;
+template <typename T, class Container>
+MutantStack<T, Container>::~MutantStack() {
+  std::cout << "MutantStack Destructor Called" << std::endl;
 }
 
-template<typename T, class Container>
-T &MutantStack::top(){
-    return (c.back());
+template <typename T, class Container> T &MutantStack<T, Container>::top() {
+  return (c.back());
 }
 
-template<typename T, class Container>
-T &MutantStack::top() const{
-    return (c.back());
+template <typename T, class Container>
+T &MutantStack<T, Container>::top() const {
+  return (c.back());
 }
 
-template<typename T, class Container>
-bool MutantStack::empty() const{
-    return (c.empty());
+template <typename T, class Container>
+bool MutantStack<T, Container>::empty() const {
+  return (c.empty());
 }
 
-template<typename T, class Container>
-void MutantStack::push(){
-    c.push_back();
+template <typename T, class Container>
+void MutantStack<T, Container>::push(T n) {
+  c.push_back(n);
 }
 
-template<typename T, class Container>
-void MutantStack::pop(){
-    c.pop_back();
+template <typename T, class Container> void MutantStack<T, Container>::pop() {
+  c.pop_back();
 }
 
-template<typename T, class Container>
-Container::size_type Container::size_type MutantStack::size(){
-    c.size();
+template <typename T, class Container>
+typename Container::size_type MutantStack<T, Container>::size() const {
+  return (c.size());
 }
 
 template <class T, class Container>
-bool MutantStack::operator==(const MutantStack<T, Container>& x, const MutantStack<T, Container>& y){
+bool operator==(const MutantStack<T, Container> &x,
+                const MutantStack<T, Container> &y) {
   bool lh_small = std::lexicographical_compare(x.it.begin(), x.it.end(),
                                                y.it.begin(), y.it.end());
   bool rh_small = std::lexicographical_compare(y.it.begin(), y.it.end(),
@@ -146,8 +123,9 @@ bool MutantStack::operator==(const MutantStack<T, Container>& x, const MutantSta
   return (false);
 }
 
-template<typename T, class Container>
-bool MutantStack::operator!=(const MutantStack<T, Container>& x, const MutantStack<T, Container>& y){
+template <typename T, class Container>
+bool operator!=(const MutantStack<T, Container> &x,
+                const MutantStack<T, Container> &y) {
   bool lh_small = std::lexicographical_compare(x.it.begin(), x.it.end(),
                                                y.it.begin(), y.it.end());
   bool rh_small = std::lexicographical_compare(y.it.begin(), y.it.end(),
@@ -157,14 +135,16 @@ bool MutantStack::operator!=(const MutantStack<T, Container>& x, const MutantSta
   return (false);
 }
 
-template<typename T, class Container>
-bool MutantStack::operator<(const MutantStack<T, Container>& x, const MutantStack<T, Container>& y){
+template <typename T, class Container>
+bool operator<(const MutantStack<T, Container> &x,
+               const MutantStack<T, Container> &y) {
   return (std::lexicographical_compare(x.it.begin(), x.it.end(), y.it.begin(),
                                        y.it.end()));
 }
 
-template<typename T, class Container>
-bool MutantStack::operator<=(const MutantStack<T, Container>& x, const MutantStack<T, Container>& y){
+template <typename T, class Container>
+bool operator<=(const MutantStack<T, Container> &x,
+                const MutantStack<T, Container> &y) {
   bool rh_small = std::lexicographical_compare(y.it.begin(), y.it.end(),
                                                x.it.begin(), x.it.end());
   if (!rh_small)
@@ -172,14 +152,16 @@ bool MutantStack::operator<=(const MutantStack<T, Container>& x, const MutantSta
   return (false);
 }
 
-template<typename T, class Container>
-bool MutantStack::operator>(const MutantStack<T, Container>& x, const MutantStack<T, Container>& y){
+template <typename T, class Container>
+bool operator>(const MutantStack<T, Container> &x,
+               const MutantStack<T, Container> &y) {
   return (std::lexicographical_compare(y.it.begin(), y.it.end(), x.it.begin(),
                                        x.it.end()));
 }
 
-template<typename T, class Container>
-bool MutantStack::operator>=(const MutantStack<T, Container>& x, const MutantStack<T, Container>& y){
+template <typename T, class Container>
+bool operator>=(const MutantStack<T, Container> &x,
+                const MutantStack<T, Container> &y) {
   bool lh_small = std::lexicographical_compare(x.it.begin(), x.it.end(),
                                                y.it.begin(), y.it.end());
   if (!lh_small)
